@@ -2,8 +2,6 @@ import { LoginUserDto } from "../../dtos/auth/loginUser.dto";
 import { AuthRepository } from "../../repositories/auth.repository";
 
 
-
-
 export class LoginUserUsecase{
 
     constructor(

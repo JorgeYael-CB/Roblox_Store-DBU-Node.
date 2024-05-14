@@ -6,7 +6,8 @@ export class ValidateData{
         const checkPass = password.trim();
 
         if( checkPass.length < 6 ) return ['password is too short'];
-        if( checkPass.length > 30 ) return ['password is too long'];
+        if( checkPass.length > 50 ) return ['password is too long'];
+        if( checkPass.includes(' ') ) return ['password is not valid!'];
 
         return [undefined, password];
     };
@@ -18,6 +19,7 @@ export class ValidateData{
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if( !emailRegex.test(emailCheck) ) return ['email is not valid'];
+        if( emailCheck.length > 100 ) return ['email is too long!'];
 
         return [undefined, emailCheck];
     }
