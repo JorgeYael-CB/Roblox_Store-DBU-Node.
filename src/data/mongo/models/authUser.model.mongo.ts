@@ -50,5 +50,5 @@ const userSchema = new Schema({
 });
 
 
-export const UserModel = mongoose.model('User', userSchema);
+export const AuthUserModel = mongoose.model('User', userSchema);
 
