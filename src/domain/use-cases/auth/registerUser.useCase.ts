@@ -24,6 +24,7 @@ export class RegisterUserUsecase{
                 hasReview: createdUser.hasReview,
                 verified: createdUser.verified,
                 id: createdUser.id,
+                email: createdUser.email,
             },
             jwt,
         }

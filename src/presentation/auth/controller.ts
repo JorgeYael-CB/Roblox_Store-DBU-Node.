@@ -4,6 +4,7 @@ import { RegisterUserDto } from "../../domain/dtos/auth/registerUser.dto";
 import { RegisterUserUsecase } from "../../domain/use-cases/auth";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
 import { CustomError } from "../../domain/errors";
+import { LoginUserUsecase } from "../../domain/use-cases/auth/loginUser.useCase";
 
 export class AuthController{
 
@@ -27,7 +28,10 @@ export class AuthController{
         const [error, loginUserDto] = LoginUserDto.create(req.body);
         if( error ) return res.status(400).json({error});
 
-        res.status(200).json(loginUserDto);
+        const loginUseCase = new LoginUserUsecase(this.authRepository, this.generateJwt)
+        loginUseCase.login(loginUserDto!)
+            .then( data => res.status(200).json({data}) )
+            .catch( err => this.handleError(err, res) );
     };
 
     registerUser = (req:Request, res:Response) => {
