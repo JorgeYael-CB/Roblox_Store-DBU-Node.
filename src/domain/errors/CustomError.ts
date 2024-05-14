@@ -12,6 +12,11 @@ export class CustomError extends Error{
         return new CustomError( message, 404 );
     }
 
+
+    static unauthorized( message: string ){
+        return new CustomError( message, 401 );
+    }
+
     static internalServerError( message: string ){
         //* Llamamos al webhook de discord
         console.log(message);

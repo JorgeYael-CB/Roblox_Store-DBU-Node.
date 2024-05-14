@@ -1,12 +1,13 @@
-import { LoginUserDto } from "../dtos/auth/loginUser.dto";
-import { RegisterUserDto } from "../dtos/auth/registerUser.dto";
+import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../dtos/auth";
 import { AuthUserEntity } from "../entities";
 
 
 
 export abstract class AuthDatasource{
 
-    abstract login( loginUserDto: LoginUserDto ): Promise<AuthUserEntity>
-    abstract register( registerUserDto: RegisterUserDto ): Promise<AuthUserEntity>
+    abstract login( loginUserDto: LoginUserDto ): Promise<AuthUserEntity>;
+    abstract register( registerUserDto: RegisterUserDto ): Promise<AuthUserEntity>;
+    abstract forgotPassword( forgoPasswordDto: ForgotPasswordDto ):Promise<AuthUserEntity>;
+    abstract resetPassword( resetPassworDto: ResetPasswordDto ):Promise<AuthUserEntity>;
 
 }

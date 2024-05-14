@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
-import { LoginUserDto } from "../../domain/dtos/auth/loginUser.dto";
-import { RegisterUserDto } from "../../domain/dtos/auth/registerUser.dto";
-import { RegisterUserUsecase } from "../../domain/use-cases/auth";
+import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../../domain/dtos/auth";
+
+import { RegisterUserUsecase, ForgotPassowrdUsecase, ResetPasswordUsecase, LoginUserUsecase } from "../../domain/use-cases/auth";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
 import { CustomError } from "../../domain/errors";
-import { LoginUserUsecase } from "../../domain/use-cases/auth/loginUser.useCase";
+import { MailerAdapter } from "../../config";
 
 export class AuthController{
 
     constructor(
         private readonly authRepository: AuthRepository,
         private readonly generateJwt: (payload: Object, duration?: string | undefined) => Promise<string | null>,
+        private readonly mailerService: MailerAdapter,
+        private readonly validateJwt: <T>(token: string) => Promise<T | null>,
     ){};
 
 
@@ -42,5 +44,31 @@ export class AuthController{
         registerUseCase.register(registerUserDto!)
             .then( data => res.status(200).json({data}) )
             .catch( error => this.handleError(error, res) );
-    }
+    };
+
+    forgotPassowrd = (req:Request, res:Response) => {
+        const [error, forgotPasswordDto] = ForgotPasswordDto.create(req.body);
+        if( error ) return res.status(200).json({error});
+
+        const { urlResetPassword } = req.query;
+
+        if( !urlResetPassword ) return res.status(400).json({frontError: 'Missing urlResetPassword in params'});
+
+        const forgotPasswordUseCase = new ForgotPassowrdUsecase(this.authRepository, this.mailerService, this.generateJwt)
+        forgotPasswordUseCase.forgot(forgotPasswordDto!, urlResetPassword)
+            .then( () => res.status(200).json({message: 'Succes', error: false, succes: true}) )
+            .catch( err => this.handleError(err, res) );
+    };
+
+    resetPassword = (req: Request, res:Response) => {
+        const [error, resetPasswordDto] = ResetPasswordDto.create(req.body);
+        if( error ) return res.status(200).json({error});
+
+        const {jwt} = req.params;
+        const resetPasswordUsecase = new ResetPasswordUsecase(this.authRepository, this.validateJwt, this.mailerService);
+
+        resetPasswordUsecase.reset(resetPasswordDto!, jwt)
+            .then( () => res.status(200).json({message: 'Succes', error: false, succes: true}) )
+            .catch( error => res.status(400).json({error}) );
+    };
 }

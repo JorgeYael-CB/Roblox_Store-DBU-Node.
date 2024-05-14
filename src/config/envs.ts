@@ -8,4 +8,6 @@ export const envs = {
     KEY_HOOK_STRIPE: get('KEY_HOOK_STRIPE').required().asString(),
     MONGO_DB_STORE_DBU_URI: get('MONGO_DB_STORE_DBU_URI').required().asString(),
     JWT_SEED: get('JWT_SEED').required().asString(),
+    MAILER_EMAIL: get('MAILER_EMAIL').required().asString(),
+    MAILER_PASS: get('MAILER_PASS').required().asString(),
 };

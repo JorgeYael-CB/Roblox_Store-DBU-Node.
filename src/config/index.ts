@@ -4,3 +4,4 @@ export * from './payments';
 export * from './validateData'
 export * from './bcrypt';
 export * from './jsonwebtoken'
+export * from './mailer';
