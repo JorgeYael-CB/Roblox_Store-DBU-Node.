@@ -24,7 +24,8 @@
     "dotenv": "^16.4.5",
     "env-var": "^7.4.2",
     "express": "^4.19.2",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "stripe": "^15.6.0"
   },
   "description": ""
 }

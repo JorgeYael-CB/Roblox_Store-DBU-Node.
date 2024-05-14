@@ -22,7 +22,6 @@ export class CronAdapter{
 
     private readonly job: CronJob;
 
-
     constructor(
         config: Props
     ){
@@ -39,5 +38,4 @@ export class CronAdapter{
             return false;
         }
     };
-
 }
