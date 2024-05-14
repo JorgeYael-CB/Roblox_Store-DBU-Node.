@@ -33,7 +33,7 @@ export class AuthDatasourceMongoImpl implements AuthDatasource {
     async register(registerUserDto: RegisterUserDto): Promise<AuthUserEntity> {
         //* Verificar que el usuario no exista
         const user = await AuthUserModel.findOne({email: registerUserDto.email});
-        if( user ) throw CustomError.badRequest('User alreadt exist!');
+        if( user ) throw CustomError.badRequest('User already exist!');
 
 
         //* Generar su password encryptada

@@ -9,7 +9,7 @@ export class Routes{
 
 
         //* Manejamos las rutas principales
-        routes.use('/api', AuthRoutes.routes);
+        routes.use('/api/auth', AuthRoutes.routes);
 
 
         return routes;
