@@ -9,5 +9,6 @@ export abstract class AuthRepository{
     abstract register( registerUserDto: RegisterUserDto ): Promise<AuthUserEntity>
     abstract forgotPassword( forgotPasswordDto: ForgotPasswordDto ):Promise<AuthUserEntity>;
     abstract resetPassword( resetPasswordDto: ResetPasswordDto ):Promise<AuthUserEntity>;
+    abstract getUserById( id: string ):Promise<AuthUserEntity>;
 
 }

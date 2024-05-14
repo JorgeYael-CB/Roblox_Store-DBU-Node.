@@ -12,8 +12,15 @@ export class AuthDatasourceMongoImpl implements AuthDatasource {
     constructor(
         private readonly bcryptHash: (password: string) => string,
         private readonly compareHash: (password: string, hashed: string) => boolean,
-    ){}
+    ){};
 
+
+    async getUserById(id: string): Promise<AuthUserEntity> {
+        const user = await AuthUserModel.findById(id);
+        if( !user ) throw CustomError.unauthorized('user not exist');
+
+        return AuthUserMapper.getUserByObject(user);
+    }
 
     async forgotPassword(forgoPasswordDto: ForgotPasswordDto): Promise<AuthUserEntity> {
         //* Verificamos que el usuario exista
