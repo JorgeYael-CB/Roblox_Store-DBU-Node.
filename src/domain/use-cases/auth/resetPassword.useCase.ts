@@ -14,7 +14,7 @@ export class ResetPasswordUsecase{
 
 
     async reset( resetPasswordDto: ResetPasswordDto, jwt:string ){
-        const token = this.validateJwt<{userId: string}>(jwt);
+        const token = await this.validateJwt<{userId: string}>(jwt);
         if( !token ) throw CustomError.unauthorized('Token is not valid');
 
         const user = await this.authRepository.resetPassword(resetPasswordDto);

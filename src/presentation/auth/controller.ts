@@ -56,7 +56,7 @@ export class AuthController{
 
         const forgotPasswordUseCase = new ForgotPassowrdUsecase(this.authRepository, this.mailerService, this.generateJwt)
         forgotPasswordUseCase.forgot(forgotPasswordDto!, urlResetPassword)
-            .then( () => res.status(200).json({message: 'Succes', error: false, succes: true}) )
+            .then( () => res.status(200).json({message: 'Succes', error: undefined, succes: true}) )
             .catch( err => this.handleError(err, res) );
     };
 
@@ -64,11 +64,11 @@ export class AuthController{
         const [error, resetPasswordDto] = ResetPasswordDto.create(req.body);
         if( error ) return res.status(200).json({error});
 
-        const {jwt} = req.params;
+        const { jwt } = req.params;
         const resetPasswordUsecase = new ResetPasswordUsecase(this.authRepository, this.validateJwt, this.mailerService);
 
         resetPasswordUsecase.reset(resetPasswordDto!, jwt)
-            .then( () => res.status(200).json({message: 'Succes', error: false, succes: true}) )
-            .catch( error => res.status(400).json({error}) );
+            .then( () => res.status(200).json({message: 'Succes', error: undefined, succes: true}) )
+            .catch( error => this.handleError(error, res) );
     };
 }
