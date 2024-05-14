@@ -1,3 +1,5 @@
+import { ValidateData } from "../../../config";
+
 export class RegisterUserDto{
 
 
@@ -12,8 +14,14 @@ export class RegisterUserDto{
 
 
         //* Validaciones
+        if( !name ) return ['Missing name'];
+        if( name.trim().length < 2 ) return ['name is too short'];
 
+        const [passError, pass] = ValidateData.checkPassword(password);
+        const [mailError, mail] = ValidateData.checkEmail(email);
 
-        return[];
+        if( passError || mailError ) return [passError ?? mailError];
+
+        return[undefined, new RegisterUserDto(name.trim(), pass!, mail!)];
     };
 };
