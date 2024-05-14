@@ -16,12 +16,13 @@ export class RegisterUserDto{
         //* Validaciones
         if( !name ) return ['Missing name'];
         if( name.trim().length < 2 ) return ['name is too short'];
+        if( name.trim().length > 50 ) return ['name is too long'];
 
         const [passError, pass] = ValidateData.checkPassword(password);
         const [mailError, mail] = ValidateData.checkEmail(email);
 
         if( passError || mailError ) return [passError ?? mailError];
 
-        return[undefined, new RegisterUserDto(name.trim(), pass!, mail!)];
+        return[undefined, new RegisterUserDto(name.trim(), mail!, pass!)];
     };
 };
