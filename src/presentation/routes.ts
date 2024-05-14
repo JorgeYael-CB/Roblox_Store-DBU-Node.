@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { AuthRoutes } from "./auth/routes";
 
 
 
@@ -8,6 +9,8 @@ export class Routes{
 
 
         //* Manejamos las rutas principales
+        routes.use('/api', AuthRoutes.routes);
+
 
         return routes;
     }
