@@ -9,7 +9,7 @@ interface Props{
 }
 
 interface SendMailProps{
-    to:string;
+    to:string | string[];
     subject:string;
     html:string;
 }

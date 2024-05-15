@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../../domain/dtos/auth";
 
-import { RegisterUserUsecase, ForgotPassowrdUsecase, ResetPasswordUsecase, LoginUserUsecase } from "../../domain/use-cases/auth";
+import { RegisterUserUsecase, ForgotPassowrdUsecase, ResetPasswordUsecase, LoginUserUsecase, GetUserByTokenUsecase } from "../../domain/use-cases/auth";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
 import { CustomError } from "../../domain/errors";
 import { MailerAdapter } from "../../config";
@@ -71,4 +71,13 @@ export class AuthController{
             .then( () => res.status(200).json({message: 'Succes', error: undefined, succes: true}) )
             .catch( error => this.handleError(error, res) );
     };
+
+    getUserByToken = (req:Request, res:Response) => {
+        const { jwt } = req.params;
+        const getUserByJwt = new GetUserByTokenUsecase(this.authRepository, this.generateJwt, this.validateJwt);
+
+        getUserByJwt.getUser(jwt)
+            .then( data => res.status(200).json({data}) )
+            .catch( error => this.handleError(error, res) );
+    }
 }

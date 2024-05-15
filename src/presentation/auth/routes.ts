@@ -37,6 +37,8 @@ export class AuthRoutes{
         routes.post('/forgot-password', controller.forgotPassowrd);
         routes.post('/reset-password/:jwt', controller.resetPassword);
 
+        routes.get('/get-user-by-jwt/:jwt', controller.getUserByToken);
+
 
         return routes;
     }
