@@ -38,6 +38,7 @@ export class AuthRoutes{
         routes.post('/reset-password/:jwt', controller.resetPassword);
 
         routes.get('/get-user-by-jwt/:jwt', controller.getUserByToken);
+        routes.get('/verify-user-account/:jwt', controller.verifyUserAccount);
 
 
         return routes;

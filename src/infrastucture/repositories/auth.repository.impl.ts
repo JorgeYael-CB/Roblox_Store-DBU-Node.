@@ -7,8 +7,12 @@ export class AuthRepositoryImpl implements AuthRepository {
 
     constructor(
         private readonly authDatasource: AuthDatasource,
-    ){};
+    ){}
 
+
+    async verifyAccount(id: string): Promise<AuthUserEntity> {
+        return await this.authDatasource.verifyAccount(id);
+    };
 
     async getUserById(id: string): Promise<AuthUserEntity> {
         return await this.authDatasource.getUserById(id);

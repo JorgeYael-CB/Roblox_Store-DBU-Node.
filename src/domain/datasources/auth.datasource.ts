@@ -10,5 +10,6 @@ export abstract class AuthDatasource{
     abstract forgotPassword( forgoPasswordDto: ForgotPasswordDto ):Promise<AuthUserEntity>;
     abstract resetPassword( resetPassworDto: ResetPasswordDto ):Promise<AuthUserEntity>;
     abstract getUserById( id: string ):Promise<AuthUserEntity>;
+    abstract verifyAccount( id: string ):Promise<AuthUserEntity>;
 
 }

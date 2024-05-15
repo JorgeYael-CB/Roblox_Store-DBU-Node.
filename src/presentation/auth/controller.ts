@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../../domain/dtos/auth";
 
-import { RegisterUserUsecase, ForgotPassowrdUsecase, ResetPasswordUsecase, LoginUserUsecase, GetUserByTokenUsecase } from "../../domain/use-cases/auth";
+import { RegisterUserUsecase, ForgotPassowrdUsecase, ResetPasswordUsecase, LoginUserUsecase, GetUserByTokenUsecase, VerifyAccountUsecase } from "../../domain/use-cases/auth";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
 import { CustomError } from "../../domain/errors";
 import { MailerAdapter } from "../../config";
@@ -36,22 +36,26 @@ export class AuthController{
             .catch( err => this.handleError(err, res) );
     };
 
+
     registerUser = (req:Request, res:Response) => {
         const [error, registerUserDto] = RegisterUserDto.create(req.body);
         if( error ) return res.status(400).json({error});
 
-        const registerUseCase = new RegisterUserUsecase(this.authRepository, this.generateJwt);
-        registerUseCase.register(registerUserDto!)
+        const { urlVerifyAccount } = req.query;
+        if( !urlVerifyAccount ) return res.status(400).json({frontError: 'Missing urlVerifyAccount in params'});
+
+        const registerUseCase = new RegisterUserUsecase(this.authRepository, this.mailerService, this.generateJwt);
+        registerUseCase.register(registerUserDto!, urlVerifyAccount)
             .then( data => res.status(200).json({data}) )
             .catch( error => this.handleError(error, res) );
     };
+
 
     forgotPassowrd = (req:Request, res:Response) => {
         const [error, forgotPasswordDto] = ForgotPasswordDto.create(req.body);
         if( error ) return res.status(200).json({error});
 
         const { urlResetPassword } = req.query;
-
         if( !urlResetPassword ) return res.status(400).json({frontError: 'Missing urlResetPassword in params'});
 
         const forgotPasswordUseCase = new ForgotPassowrdUsecase(this.authRepository, this.mailerService, this.generateJwt)
@@ -59,6 +63,7 @@ export class AuthController{
             .then( () => res.status(200).json({message: 'Succes', error: undefined, succes: true}) )
             .catch( err => this.handleError(err, res) );
     };
+
 
     resetPassword = (req: Request, res:Response) => {
         const [error, resetPasswordDto] = ResetPasswordDto.create(req.body);
@@ -72,6 +77,7 @@ export class AuthController{
             .catch( error => this.handleError(error, res) );
     };
 
+
     getUserByToken = (req:Request, res:Response) => {
         const { jwt } = req.params;
         const getUserByJwt = new GetUserByTokenUsecase(this.authRepository, this.generateJwt, this.validateJwt);
@@ -79,5 +85,15 @@ export class AuthController{
         getUserByJwt.getUser(jwt)
             .then( data => res.status(200).json({data}) )
             .catch( error => this.handleError(error, res) );
-    }
+    };
+
+
+    verifyUserAccount = (req:Request, res:Response) => {
+        const { jwt } = req.params;
+        const verifyAccountUsecase = new VerifyAccountUsecase(this.authRepository, this.validateJwt);
+
+        verifyAccountUsecase.verify(jwt)
+            .then( data => res.status(200).json({data}))
+            .catch( err => this.handleError(err, res) );
+    };
 }
