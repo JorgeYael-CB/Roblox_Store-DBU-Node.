@@ -1,5 +1,4 @@
 export class AuthUserEntity{
-
     constructor(
         public readonly name: string,
         public readonly email: string,
@@ -12,5 +11,4 @@ export class AuthUserEntity{
         public readonly banned: boolean,
         public readonly startsReview: number,
     ){};
-
 }
