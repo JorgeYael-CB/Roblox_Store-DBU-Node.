@@ -22,8 +22,8 @@ export class AuthRepositoryImpl implements AuthRepository {
         return await this.authDatasource.forgotPassword(forgotPasswordDto);
     };
 
-    async resetPassword(resetPasswordDto: ResetPasswordDto): Promise<AuthUserEntity> {
-        return await this.authDatasource.resetPassword(resetPasswordDto);
+    async resetPassword(resetPasswordDto: ResetPasswordDto, userId: string): Promise<AuthUserEntity> {
+        return await this.authDatasource.resetPassword(resetPasswordDto, userId);
     };
 
     async login(loginUserDto: LoginUserDto): Promise<AuthUserEntity> {

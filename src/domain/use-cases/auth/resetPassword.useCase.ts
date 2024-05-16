@@ -17,7 +17,9 @@ export class ResetPasswordUsecase{
         const token = await this.validateJwt<{userId: string}>(jwt);
         if( !token ) throw CustomError.unauthorized('Token is not valid');
 
-        const user = await this.authRepository.resetPassword(resetPasswordDto);
+        const {userId} = token;
+
+        const user = await this.authRepository.resetPassword(resetPasswordDto, userId);
 
         //* Notificamos al usuario que se cambio su contraseña
         this.mailerService.send({

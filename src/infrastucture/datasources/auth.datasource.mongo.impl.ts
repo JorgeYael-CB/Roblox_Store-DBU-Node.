@@ -52,9 +52,9 @@ export class AuthDatasourceMongoImpl implements AuthDatasource {
         return AuthUserMapper.getUserByObject(user);
     };
 
-    async resetPassword(resetPasswordDto: ResetPasswordDto): Promise<AuthUserEntity> {
+    async resetPassword(resetPasswordDto: ResetPasswordDto, userId:string): Promise<AuthUserEntity> {
         //* Verificamos que el usuario exista
-        const user = await AuthUserModel.findOne({email: resetPasswordDto.email});
+        const user = await AuthUserModel.findById(userId);
         if( !user ) throw CustomError.unauthorized('user not exist');
 
         //* Verificamos que este verificado
