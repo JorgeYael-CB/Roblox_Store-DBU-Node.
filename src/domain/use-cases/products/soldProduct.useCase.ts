@@ -38,7 +38,7 @@ export class SoldProductUsecase{
             amount: product.price,
             clientEmail: user.email,
             clientName: user.name,
-            currency: 'mxn',
+            currency: 'xaf',
             productName: product.name,
             quantity: 1,
             urlCancel,

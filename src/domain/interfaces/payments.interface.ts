@@ -1,7 +1,7 @@
 
 
 export interface PaymentProps{
-    currency: 'usd' | 'mxn' | 'eur';
+    currency: 'usd' | 'mxn' | 'eur' | 'xaf';
     productName: string;
     quantity: number;
     amount: number;
