@@ -43,7 +43,7 @@ export class WebhookPaymentUsecase{
 
 
         //* Notificamos con un email al usuario que compro
-        this.mailerAdapter.send({
+        await this.mailerAdapter.send({
             to: dataHook.email,
             subject: `Purchase Confirmation from DevComplete Studios`,
             html: `

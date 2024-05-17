@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+
 
 export interface PaymentProps{
     currency: 'usd' | 'mxn' | 'eur';

@@ -61,7 +61,9 @@ export class ProductController{
 
     hook = (req:Request, res:Response) => {
         const data = this.paymentAdapter.hook(req, res);
-        if( !data || !data.email ) return;
+        if( !data || !data.email ) {
+            return
+        };
 
         const useCase = new WebhookPaymentUsecase(this.mailerService, this.authRepository, this.discordHook)
         useCase.webhook(data)

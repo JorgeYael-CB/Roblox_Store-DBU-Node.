@@ -90,5 +90,4 @@ export class PaymentAdapter{
             throw CustomError.internalServerError(`${error}`);
         };
     };
-
 }
