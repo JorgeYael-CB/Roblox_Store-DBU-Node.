@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 
 
 interface Props{
@@ -28,6 +29,8 @@ export class Server{
     private config = () => {
         //* Middlewares
         this.app.use( cors() );
+
+        this.app.use( /.*products.*webhook.*/, bodyParser.raw({type: 'application/json'}) );
         this.app.use( express.json() );
         this.app.use( express.urlencoded({extended: true}) );
 

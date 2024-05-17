@@ -7,6 +7,7 @@ export interface PaymentProps{
     amount: number;
     urlSucces: string;
     urlCancel:string;
+    description?:string;
 
     clientEmail: string;
     clientName: string;

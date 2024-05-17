@@ -21,7 +21,7 @@ export class AuthController{
             return res.status(error.level).json({error: error.message});
         }
 
-        console.log(`${error}`) // Winston
+        CustomError.internalServerError(`${error}`);
         return res.status(500).json({error: 'Internal server error!'});
     };
 

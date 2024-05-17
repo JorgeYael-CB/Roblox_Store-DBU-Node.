@@ -7,5 +7,7 @@ export class ProductEntity{
         public readonly discount: boolean,
         public readonly amountDiscount: number,
         public readonly category: string,
+        public readonly urlImage: string,
+        public readonly id: string | number,
     ){}
 }

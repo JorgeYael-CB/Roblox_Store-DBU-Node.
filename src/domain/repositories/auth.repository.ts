@@ -11,5 +11,6 @@ export abstract class AuthRepository{
     abstract resetPassword( resetPassworDto: ResetPasswordDto, userId: string ):Promise<AuthUserEntity>;
     abstract getUserById( id: string ):Promise<AuthUserEntity>;
     abstract verifyAccount( id: string ):Promise<AuthUserEntity>;
+    abstract addAccountPay( obj: {email: string, nameAccount: string} ): Promise<AuthUserEntity>;
 
 }

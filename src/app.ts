@@ -1,4 +1,4 @@
-import { envs } from "./config";
+import { DiscordWebhook, envs } from "./config";
 import { MongoDb } from "./data/mongo/db";
 import { Routes } from "./presentation/routes";
 import { Server } from "./presentation/server";

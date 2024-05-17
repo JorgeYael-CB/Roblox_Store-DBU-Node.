@@ -35,7 +35,12 @@ const productSchema = new Schema({
         type: String,
         enum: ['BASIC', 'PREMIUM', 'NORMAL'],
         default: 'BASIC',
-    }
+    },
+
+    urlImage: {
+        type: String,
+        required: [true, 'urlImage} is required'],
+    },
 });
 
 export const ProductModel = mongoose.model('products', productSchema);

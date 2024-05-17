@@ -13,7 +13,7 @@ export class GetUserByTokenUsecase{
 
     async getUser( jwtCheck:string ){
         const token = await this.validateJwt<{userId: string}>(jwtCheck);
-        if( !token ) throw CustomError.unauthorized('token is not valid');
+        if( !token ) throw CustomError.unauthorized('Oops! An error has occurred, please try again later.');
 
         const id = token.userId;
         const user = await this.authRepository.getUserById(id);

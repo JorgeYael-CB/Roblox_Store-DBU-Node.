@@ -10,4 +10,6 @@ export const envs = {
     JWT_SEED: get('JWT_SEED').required().asString(),
     MAILER_EMAIL: get('MAILER_EMAIL').required().asString(),
     MAILER_PASS: get('MAILER_PASS').required().asString(),
+    DISCORD_HOOK_MONEY_ALERT: get('DISCORD_HOOK_MONEY_ALERT').required().asString(),
+    DISCORD_HOOK_ERROR: get('DISCORD_HOOK_ERROR').required().asString(),
 };

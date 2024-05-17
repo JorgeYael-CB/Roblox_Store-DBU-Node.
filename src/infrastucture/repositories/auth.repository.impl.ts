@@ -10,6 +10,11 @@ export class AuthRepositoryImpl implements AuthRepository {
     ){}
 
 
+    async addAccountPay(obj: { email: string; nameAccount: string; }): Promise<AuthUserEntity> {
+        return await this.authDatasource.addAccountPay(obj);
+    }
+
+
     async verifyAccount(id: string): Promise<AuthUserEntity> {
         return await this.authDatasource.verifyAccount(id);
     };

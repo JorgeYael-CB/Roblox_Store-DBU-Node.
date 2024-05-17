@@ -5,3 +5,5 @@ export * from './validateData'
 export * from './bcrypt';
 export * from './jsonwebtoken'
 export * from './mailer';
+export * from './uuidv4';
+export * from './discordHook';

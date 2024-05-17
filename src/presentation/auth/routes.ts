@@ -2,7 +2,7 @@ import { Router } from "express";
 import { AuthController } from "./controller";
 import { AuthRepositoryImpl } from "../../infrastucture/repositories/auth.repository.impl";
 import { AuthDatasourceMongoImpl } from "../../infrastucture/datasources/auth.datasource.mongo.impl";
-import { BcryptAdapter, JwtAdapter, MailerAdapter, envs } from "../../config";
+import { BcryptAdapter, DiscordWebhook, JwtAdapter, MailerAdapter, envs } from "../../config";
 
 
 const hash = BcryptAdapter.hash;

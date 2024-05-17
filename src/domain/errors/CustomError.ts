@@ -1,4 +1,4 @@
-import { envs } from "../../config";
+import { DiscordWebhook, envs } from "../../config";
 
 
 export class CustomError extends Error{
@@ -19,7 +19,12 @@ export class CustomError extends Error{
 
     static internalServerError( message: string ){
         //* Llamamos al webhook de discord
-        console.log(message);
+        new DiscordWebhook(envs.DISCORD_HOOK_ERROR)
+            .notify(message, {
+                image: {
+                    url: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYThieGxoczY4OGQ0M25wOGw2bnAwbThiYTE0MXN0b2w3cmI0MWt1ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FmQaBsZSBs6buQE/giphy.gif'
+                }
+            });
 
         return new CustomError('Internal Server Error!', 500 );
     }

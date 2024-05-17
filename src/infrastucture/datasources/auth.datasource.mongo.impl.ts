@@ -15,6 +15,24 @@ export class AuthDatasourceMongoImpl implements AuthDatasource {
     ){}
 
 
+    async addAccountPay(obj: { email: string; nameAccount: string; }): Promise<AuthUserEntity> {
+        //* Verificamos que el usuario exista
+        const user = await AuthUserModel.findOne({email: obj.email});
+        if( !user ) throw CustomError.internalServerError(`user with email: ${obj.email}`);
+
+
+        //* Agregamos el nuevo elemento
+        user.buyerAccounts.push(obj.nameAccount);
+
+
+        //* Guardamos al usuario
+        await user.save();
+
+
+        return AuthUserMapper.getUserByObject(user);
+    }
+
+
     async verifyAccount(id: string): Promise<AuthUserEntity> {
         //* Verificamos que el usuario exista
         const user = await AuthUserModel.findById(id);

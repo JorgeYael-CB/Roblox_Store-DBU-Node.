@@ -12,7 +12,7 @@ export class VerifyAccountUsecase{
 
     async verify( token: string ){
         const jwt = await this.validateJwt<{userId: string}>(token);
-        if( !jwt ) throw CustomError.unauthorized('token is not valid');
+        if( !jwt ) throw CustomError.unauthorized('Oops! An error has occurred, please try again later.');
 
         const {userId} = jwt;
         const user = await this.authRepository.verifyAccount(userId);
