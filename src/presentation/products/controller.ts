@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateProductDto } from "../../domain/dtos/products";
+import { CreateProductDto , EditProductDto} from "../../domain/dtos/products";
 import { CreateProductUsecase, SoldProductUsecase, WebhookPaymentUsecase } from "../../domain/use-cases/products";
 import { ProductsRepository } from "../../domain/repositories/products.repository";
 import { CustomError } from "../../domain/errors";
@@ -62,7 +62,7 @@ export class ProductController{
     hook = (req:Request, res:Response) => {
         const data = this.paymentAdapter.hook(req, res);
         if( !data || !data.email ) {
-            return
+            return;
         };
 
         const useCase = new WebhookPaymentUsecase(this.mailerService, this.authRepository, this.discordHook)

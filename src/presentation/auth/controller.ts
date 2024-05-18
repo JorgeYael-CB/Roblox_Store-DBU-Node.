@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../../domain/dtos/auth";
 
 import { RegisterUserUsecase, ForgotPassowrdUsecase, ResetPasswordUsecase, LoginUserUsecase, GetUserByTokenUsecase, VerifyAccountUsecase } from "../../domain/use-cases/auth";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
 import { CustomError } from "../../domain/errors";
 import { MailerAdapter } from "../../config";
+import { EditProductDto } from "../../domain/dtos/products";
+import { EditProductUsecase } from "../../domain/use-cases/products/editProduct.useCase";
 
 export class AuthController{
 
@@ -96,4 +98,15 @@ export class AuthController{
             .then( data => res.status(200).json({data}))
             .catch( err => this.handleError(err, res) );
     };
-}
+
+
+    editAccount = (req:Request, res:Response) => {
+        const [error, editProductDto] = EditProductDto.create(req.body);
+        if( error ) return res.status(400).json({error});
+
+        const useCase = new EditProductUsecase(this.validateJwt, this.authRepository);
+        useCase.edit(editProductDto!, editProductDto!.token)
+            .then( data => res.status(200).json({data}) )
+            .catch( err => this.handleError(err, res) );
+    }
+};

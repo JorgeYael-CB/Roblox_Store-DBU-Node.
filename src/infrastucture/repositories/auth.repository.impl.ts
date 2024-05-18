@@ -1,5 +1,6 @@
 import { AuthDatasource } from "../../domain/datasources/auth.datasource";
 import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../../domain/dtos/auth";
+import { EditProductDto } from "../../domain/dtos/products";
 import { AuthUserEntity } from "../../domain/entities";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
 
@@ -7,7 +8,12 @@ export class AuthRepositoryImpl implements AuthRepository {
 
     constructor(
         private readonly authDatasource: AuthDatasource,
-    ){}
+    ){};
+
+
+    async editAccount(editAccount: EditProductDto, userId: string): Promise<AuthUserEntity> {
+        return await this.authDatasource.editAccount(editAccount, userId);
+    };
 
 
     async addAccountPay(obj: { email: string; nameAccount: string; }): Promise<AuthUserEntity> {

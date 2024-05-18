@@ -9,8 +9,7 @@ import { ProductMapper } from "../mappers/products.mapper";
 
 export class ProductDatasourceMongoImpl implements ProductsDatasource{
 
-    constructor(){}
-
+    constructor(){};
 
     async getProducts(): Promise<ProductEntity[]> {
         const products = await ProductModel.find();

@@ -1,6 +1,7 @@
 import { AuthUserModel } from "../../data/mongo/models/authUser.model.mongo";
 import { AuthDatasource } from "../../domain/datasources/auth.datasource";
 import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from "../../domain/dtos/auth";
+import { EditProductDto } from "../../domain/dtos/products";
 import { AuthUserEntity } from "../../domain/entities";
 import { CustomError } from "../../domain/errors";
 import { AuthUserMapper } from "../mappers/authUser.mapper";
@@ -12,7 +13,25 @@ export class AuthDatasourceMongoImpl implements AuthDatasource {
     constructor(
         private readonly bcryptHash: (password: string) => string,
         private readonly compareHash: (password: string, hashed: string) => boolean,
-    ){}
+    ){};
+
+
+    async editAccount(editAccount: EditProductDto, userId: string): Promise<AuthUserEntity> {
+        const user = await AuthUserModel.findById(userId);
+        if (!user) throw CustomError.unauthorized('User not exist');
+
+        const { newProductName, previusProductName } = editAccount;
+        const accountIndex = user.buyerAccounts.findIndex(account => account === previusProductName);
+
+        if (accountIndex !== -1) {
+            user.buyerAccounts[accountIndex] = newProductName;
+            await user.save(); // Guardar los cambios en la base de datos
+        } else {
+            throw CustomError.badRequest('Previous product name not found');
+        };
+
+        return AuthUserMapper.getUserByObject(user);
+    };
 
 
     async addAccountPay(obj: { email: string; nameAccount: string; }): Promise<AuthUserEntity> {

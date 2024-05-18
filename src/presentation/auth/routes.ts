@@ -40,6 +40,8 @@ export class AuthRoutes{
         routes.get('/get-user-by-jwt/:jwt', controller.getUserByToken);
         routes.get('/verify-user-account/:jwt', controller.verifyUserAccount);
 
+        routes.post('/edit-account', controller.editAccount);
+
 
         return routes;
     }
