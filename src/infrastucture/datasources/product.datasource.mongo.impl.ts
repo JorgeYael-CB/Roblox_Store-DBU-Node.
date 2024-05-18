@@ -11,6 +11,12 @@ export class ProductDatasourceMongoImpl implements ProductsDatasource{
 
     constructor(){}
 
+
+    async getProducts(): Promise<ProductEntity[]> {
+        const products = await ProductModel.find();
+        return products.map( product => ProductMapper.getUserByObject(product));
+    }
+
     async getUserByName(name: string): Promise<ProductEntity> {
         const product = await ProductModel.findOne({name});
         if( !product ) throw CustomError.badRequest(`Product with name: ${name} not found`);

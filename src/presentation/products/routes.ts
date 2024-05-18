@@ -35,6 +35,7 @@ export class ProductRoutes{
         //* Manejamos las rutas
         router.post('/create-product', controller.createProduct);
         router.get('/sold-product/:jwt', controller.soldProduct);
+        router.get('/get-products', controller.getProducts);
 
         router.post('/sold-webhook', controller.hook);
 

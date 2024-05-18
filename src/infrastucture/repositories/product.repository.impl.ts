@@ -10,6 +10,11 @@ export class ProductRepositoryImpl implements ProductsRepository{
         private readonly productDatasource: ProductsDatasource,
     ){}
 
+
+    async getProducts(): Promise<ProductEntity[]> {
+        return await this.productDatasource.getProducts();
+    };
+
     async getUserByName(name: string): Promise<ProductEntity> {
         return await this.productDatasource.getUserByName(name);
     };

@@ -68,5 +68,11 @@ export class ProductController{
         const useCase = new WebhookPaymentUsecase(this.mailerService, this.authRepository, this.discordHook)
         useCase.webhook(data)
             .catch( err => CustomError.internalServerError(`${err}`) );
-    }
+    };
+
+    getProducts = (req:Request, res:Response) => {
+        this.productRepository.getProducts()
+            .then( products => res.status(200).json({products}))
+            .catch( err => this.handleError(err, res) );
+    };
 };
